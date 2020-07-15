@@ -1,6 +1,7 @@
 package com.example.oshan.memorableplaces;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,13 +43,19 @@ public class MainActivity extends AppCompatActivity {
         placesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                listViewClickListener(i);
+                goToMaps(i);
             }
         });
     }
 
-    public void listViewClickListener(int idx){
-
-        Log.i("item idx", Integer.toString(idx));
+    public void goToMaps(int idx){
+//        Log.i("item idx", Integer.toString(idx));
+        Intent mapsActivityIntent = new Intent(getApplicationContext(),MapsActivity.class);
+        if(idx == 1){
+            mapsActivityIntent.putExtra("address", "0");
+        } else {
+            mapsActivityIntent.putExtra("address", placeNames.get(idx));
+        };
+        startActivity(mapsActivityIntent);
     }
 }
