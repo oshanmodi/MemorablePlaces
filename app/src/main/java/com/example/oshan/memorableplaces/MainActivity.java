@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,13 +33,22 @@ public class MainActivity extends AppCompatActivity {
         placesListView.addHeaderView(headerTextView);
 
 //        add array adapter to the list view. We only have on item at the start.
-//        as user saves more location we keep adding more itemss
+//        as user saves more location we keep adding more items
         placeNames.add("add a favorite place");
-
         Context context = getApplicationContext();
         ArrayAdapter placesAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, placeNames);
-
         placesListView.setAdapter(placesAdapter);
 
+        placesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                listViewClickListener(i);
+            }
+        });
+    }
+
+    public void listViewClickListener(int idx){
+
+        Log.i("item idx", Integer.toString(idx));
     }
 }
