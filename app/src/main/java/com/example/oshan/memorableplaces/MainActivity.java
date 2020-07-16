@@ -42,6 +42,22 @@ public class MainActivity extends AppCompatActivity {
         placeNames.add("add a favorite place");
 
         Context context = getApplicationContext();
+
+//        get intent when returning from maps.
+        Intent intent = getIntent();
+        if(intent.getExtras() != null) {
+            Bundle inputFromMap = intent.getExtras();
+            savedLocations = (ArrayList<LatLng>) inputFromMap.get("newLocLatLng");
+            placeNames = (ArrayList<String>) inputFromMap.get("newAddress");
+//            String addressText = (String) inputFromMap.get("newAddress");
+//            Log.i("info", newLatLng.toString());
+//            if (newLatLng != null) {
+//                savedLocations.add(newLatLng);
+//                placeNames.add(addressText);
+//                Log.i("info", newLatLng.toString());
+//            }
+        }
+
         ArrayAdapter placesAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, placeNames);
         placesListView.setAdapter(placesAdapter);
 
@@ -52,30 +68,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        get intent when returning from maps.
-        Intent intent = getIntent();
-        if(intent.getExtras() != null) {
-            Bundle inputFromMap = intent.getExtras();
-            LatLng newLatLng = (LatLng) inputFromMap.get("newLocLatLng");
-            String addressText = (String) inputFromMap.get("newAddress");
-            Log.i("info", newLatLng.toString());
-            if (newLatLng != null) {
-                savedLocations.add(newLatLng);
-                placeNames.add(addressText);
-                Log.i("info", newLatLng.toString());
-            }
-        }
     }
 
     public void goToMaps(int idx){
 //        Log.i("item idx", Integer.toString(idx));
         mapsActivityIntent = new Intent(getApplicationContext(),MapsActivity.class);
-        if(idx == 1){
-            mapsActivityIntent.putExtra("address", "Add new location");
-        } else {
+        if(idx !=1) {
             Log.i("index, lengplaces, lenglocations", Integer.toString(idx) + Integer.toString(placeNames.size()) + Integer.toString(savedLocations.size()));
-            mapsActivityIntent.putExtra("addressText", placeNames.get(idx-1));
-            mapsActivityIntent.putExtra("addressLatLng", savedLocations.get(idx-2));
+            mapsActivityIntent.putExtra("addressText", placeNames);
+            mapsActivityIntent.putExtra("addressLatLng", savedLocations);
+            mapsActivityIntent.putExtra("idx", idx);
         }
         startActivity(mapsActivityIntent);
     }
