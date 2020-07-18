@@ -6,12 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.oshan.memorableplaces.MainActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.15"
-        android:scaleType="centerCrop"
-        android:src="@drawable/travelvan"/>
+
     <ListView
         android:id="@+id/placesListView"
         android:layout_width="368dp"

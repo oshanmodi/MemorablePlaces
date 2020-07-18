@@ -49,14 +49,12 @@ public class MainActivity extends AppCompatActivity {
             Bundle inputFromMap = intent.getExtras();
             savedLocations = (ArrayList<LatLng>) inputFromMap.get("newLocLatLng");
             placeNames = (ArrayList<String>) inputFromMap.get("newAddress");
-//            String addressText = (String) inputFromMap.get("newAddress");
-//            Log.i("info", newLatLng.toString());
-//            if (newLatLng != null) {
-//                savedLocations.add(newLatLng);
-//                placeNames.add(addressText);
-//                Log.i("info", newLatLng.toString());
-//            }
+            intent.replaceExtras(new Bundle());
+            intent.setAction("");
+            intent.setData(null);
+            intent.setFlags(0);
         }
+
 
         ArrayAdapter placesAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, placeNames);
         placesListView.setAdapter(placesAdapter);
@@ -73,12 +71,12 @@ public class MainActivity extends AppCompatActivity {
     public void goToMaps(int idx){
 //        Log.i("item idx", Integer.toString(idx));
         mapsActivityIntent = new Intent(getApplicationContext(),MapsActivity.class);
-        if(idx !=1) {
-            Log.i("index, lengplaces, lenglocations", Integer.toString(idx) + Integer.toString(placeNames.size()) + Integer.toString(savedLocations.size()));
-            mapsActivityIntent.putExtra("addressText", placeNames);
-            mapsActivityIntent.putExtra("addressLatLng", savedLocations);
-            mapsActivityIntent.putExtra("idx", idx);
-        }
+//        if(idx !=1) {
+        Log.i("index, lengthPlaces, lenglocations", Integer.toString(idx) + Integer.toString(placeNames.size()) + Integer.toString(savedLocations.size()));
+        mapsActivityIntent.putExtra("addressText", placeNames);
+        mapsActivityIntent.putExtra("addressLatLng", savedLocations);
+        mapsActivityIntent.putExtra("idx", idx);
+//        }
         startActivity(mapsActivityIntent);
     }
 
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         TextView headerTextView;
         headerTextView = new TextView(this);
         headerTextView.setText("Your saved places \n");
-        headerTextView.setTextSize(30);
+        headerTextView.setTextSize(22);
         headerTextView.setClickable(true);
         headerTextView.setAllCaps(true);
         placesListView.addHeaderView(headerTextView);
